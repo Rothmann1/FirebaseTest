@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1025501230099",
+    "project_id": "project-bc17f",
+    "storage_bucket": "project-bc17f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025501230099:android:9b61296f704275a25f7be6",
+        "android_client_info": {
+          "package_name": "com.katza.myapplication_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZwv0VbPDhc7AM7-B4VudGZ3WsPbwDqYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
