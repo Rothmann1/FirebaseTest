@@ -27,6 +27,11 @@ public class Student {
         return grade;
     }
 
+    @Override
+    public String toString() {
+        return id + ", " + fullName + ", " + grade + "\n";
+    }
+
     public void setGrade(int grade) {
         this.grade = grade;
     }

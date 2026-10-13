@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +12,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText etName, etId, etGrade;
     private Button btnInsert, btnSelect, btnUpdate, btnDelete;
+    private TextView tvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         etId = findViewById(R.id.tz);
         etGrade = findViewById(R.id.grade);
         btnInsert = findViewById(R.id.btnInsert);
+        tvContent = findViewById(R.id.tvcontent);
+        btnSelect = findViewById(R.id.btnSelect);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
 
         FirestoreDAO fsDAO = new FirestoreDAO();
 
@@ -39,6 +47,40 @@ public class MainActivity extends AppCompatActivity {
                 fsDAO.createDocument(etName.getText().toString(),
                         etId.getText().toString(),
                         Integer.parseInt(etGrade.getText().toString()));
+            }
+        });
+
+        btnSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                    fsDAO.readDocumentByID(etId.getText().toString(), new IFirestoreCallback() {
+//                        @Override
+//                        public void onDataReceived(ArrayList<Student> students) {
+//                            tvContent.setText(students.get(0).toString());
+//                        }
+//                    });
+                    fsDAO.readAllDocuments(new IFirestoreCallback() {
+                        @Override
+                        public void onDataReceived(ArrayList<Student> students) {
+                            for (int i = 0; i < students.size(); i++) {
+                                tvContent.setText(tvContent.getText().toString() + students.get(i).toString());
+                            }
+                        }
+                    });
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fsDAO.updateDocument(etId.getText().toString(), Integer.parseInt(etGrade.getText().toString()));
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fsDAO.deleteDocument(etId.getText().toString());
             }
         });
     }
