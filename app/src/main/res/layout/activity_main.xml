@@ -17,12 +17,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40sp"
             android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textDirection="rtl"
                 android:id="@+id/tvcontent"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="Captured image" />
         </LinearLayout>
     </ScrollView>
     <LinearLayout
@@ -86,6 +95,13 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="מחק תלמיד" />
+
+            <Button
+                android:id="@+id/btnCapture"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="צלם תמונה" />
         </LinearLayout>
     </LinearLayout>
 

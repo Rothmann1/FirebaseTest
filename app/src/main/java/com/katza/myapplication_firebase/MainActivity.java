@@ -1,12 +1,19 @@
 package com.katza.myapplication_firebase;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,8 +24,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private EditText etName, etId, etGrade;
-    private Button btnInsert, btnSelect, btnUpdate, btnDelete;
+    private Button btnInsert, btnSelect, btnUpdate, btnDelete, btnCapture;
     private TextView tvContent;
+    private ImageView imageView;
+    private ActivityResultLauncher<Intent> cameraLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btnSelect = findViewById(R.id.btnSelect);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
+        btnCapture = findViewById(R.id.btnCapture);
+        imageView = findViewById(R.id.imageView);
 
         FirestoreDAO fsDAO = new FirestoreDAO();
 
@@ -82,6 +94,40 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 fsDAO.deleteDocument(etId.getText().toString());
             }
+        });
+
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK
+                            && result.getData() != null) {
+
+                        Bundle extras = result.getData().getExtras();
+
+                        if (extras != null) {
+                            Bitmap photo =
+                                    (Bitmap) extras.get("data");
+
+                            if (photo != null) {
+                                imageView.setImageBitmap(photo);
+                            }
+                        }
+                    } else {
+                        Toast.makeText(
+                                this,
+                                "Image capture cancelled",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        );
+
+        btnCapture.setOnClickListener(v -> {
+            Intent cameraIntent = new Intent(
+                    MediaStore.ACTION_IMAGE_CAPTURE
+            );
+
+            cameraLauncher.launch(cameraIntent);
         });
     }
 }
