@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:scaleType="centerCrop"
                 android:contentDescription="Captured image" />
@@ -97,11 +97,12 @@
                 android:text="מחק תלמיד" />
 
             <Button
-                android:id="@+id/btnCapture"
+                android:id="@+id/openPhotoActivityButton"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="צלם תמונה" />
+                android:text="תמונה"
+                android:textAllCaps="false" />
         </LinearLayout>
     </LinearLayout>
 

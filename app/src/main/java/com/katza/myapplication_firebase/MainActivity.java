@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private EditText etName, etId, etGrade;
-    private Button btnInsert, btnSelect, btnUpdate, btnDelete, btnCapture;
+    private Button btnInsert, btnSelect, btnUpdate, btnDelete, btnOpenPhoto;
     private TextView tvContent;
     private ImageView imageView;
     private ActivityResultLauncher<Intent> cameraLauncher;
@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
         btnSelect = findViewById(R.id.btnSelect);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
-        btnCapture = findViewById(R.id.btnCapture);
         imageView = findViewById(R.id.imageView);
+        btnOpenPhoto = findViewById(R.id.openPhotoActivityButton);
+
 
         FirestoreDAO fsDAO = new FirestoreDAO();
 
@@ -122,12 +123,12 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        btnCapture.setOnClickListener(v -> {
-            Intent cameraIntent = new Intent(
-                    MediaStore.ACTION_IMAGE_CAPTURE
+        btnOpenPhoto.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    PhotoActivity.class
             );
-
-            cameraLauncher.launch(cameraIntent);
+            startActivity(intent);
         });
     }
 }
