@@ -58,6 +58,34 @@ public class FirestoreDAO {
         });
     }
 
+    public void readStudentsByMinGrade(int minGrade, IFirestoreCallback iFirestoreCallback) {
+        CollectionReference colRef = FirebaseFirestore.getInstance()
+                .collection(COLLECTION_NAME);
+
+        // Using .whereGreaterThanOrEqualTo to query documents
+        colRef.whereGreaterThanOrEqualTo("grade", minGrade)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        ArrayList<Student> students = new ArrayList<>();
+                        for (DocumentSnapshot docSS : queryDocumentSnapshots.getDocuments()) {
+                            Student student = docSS.toObject(Student.class);
+                            if (student != null) {
+                                students.add(student);
+                            }
+                        }
+                        iFirestoreCallback.onDataReceived(students);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("DAO_FIREBASE", "Query failed: " + e.getMessage());
+                    }
+                });
+    }
+
     public void readAllDocuments(IFirestoreCallback iFirestoreCallback) {
 
         CollectionReference colRef = FirebaseFirestore.getInstance()

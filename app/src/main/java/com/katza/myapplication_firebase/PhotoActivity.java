@@ -94,7 +94,7 @@ public class PhotoActivity extends AppCompatActivity {
         });
 
         btnSearchPhoto.setOnClickListener(v -> {
-            String id = idInput.getText().toString().trim();
+            String id = idInput.getText().toString();
 
             if (id.isEmpty()) {
                 idInput.setError("תעודת זהות");

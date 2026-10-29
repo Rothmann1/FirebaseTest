@@ -66,12 +66,18 @@ public class MainActivity extends AppCompatActivity {
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    fsDAO.readDocumentByID(etId.getText().toString(), new IFirestoreCallback() {
-//                        @Override
-//                        public void onDataReceived(ArrayList<Student> students) {
-//                            tvContent.setText(students.get(0).toString());
-//                        }
-//                    });
+                tvContent.setText("");
+
+                if (!etGrade.getText().toString().isEmpty()) {
+                        fsDAO.readStudentsByMinGrade(Integer.parseInt(etGrade.getText().toString()), new IFirestoreCallback() {
+                            @Override
+                            public void onDataReceived(ArrayList<Student> students) {
+                                for (int i = 0; i < students.size(); i++) {
+                                    tvContent.setText(tvContent.getText().toString() + students.get(i).toString());
+                                }
+                            }
+                        });
+                } else
                     fsDAO.readAllDocuments(new IFirestoreCallback() {
                         @Override
                         public void onDataReceived(ArrayList<Student> students) {
